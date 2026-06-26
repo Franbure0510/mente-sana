@@ -1,0 +1,20 @@
+{
+  "name": "mente-sana",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev -w packages/web",
+    "dev:server": "npm run dev -w packages/server",
+    "dev:mobile": "npm run dev -w packages/mobile",
+    "build": "npm run build -w packages/shared && npm run build -w packages/server && npm run build -w packages/web",
+    "db:push": "npm run db:push -w packages/server",
+    "db:seed": "npm run db:seed -w packages/server",
+    "setup": "npm install && npm run db:push && npm run db:seed"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
