@@ -2,6 +2,10 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { Request, Response, NextFunction } from 'express';
 
+if (!process.env.JWT_SECRET) {
+  console.error('ERROR: JWT_SECRET no esta definido en el entorno');
+  if (process.env.NODE_ENV === 'production') process.exit(1);
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'mente-sana-secret-dev';
 
 export interface AuthPayload {

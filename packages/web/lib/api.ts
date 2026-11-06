@@ -52,11 +52,24 @@ export const api = {
     messages: (convId: string) => request<any[]>(`/chat/conversations/${convId}/messages`),
     send: (convId: string, content: string) =>
       request<any>(`/chat/conversations/${convId}/messages`, { method: 'POST', body: JSON.stringify({ content }) }),
+    proactive: (conversationId?: string) =>
+      request<{ message: any; conversationId: string }>('/chat/proactive', { method: 'POST', body: JSON.stringify({ conversationId }) }),
   },
   profile: {
     get: () => request<any>('/profile'),
     update: (data: any) => request<any>('/profile', { method: 'PATCH', body: JSON.stringify(data) }),
     streak: () => request<{ streakDays: number }>('/profile/streak', { method: 'POST' }),
     resources: () => request<any[]>('/profile/resources'),
+    subscription: () => request<{ subscription: string }>('/profile/subscription'),
+    upgrade: (plan?: string) => request<{ subscription: string }>('/profile/subscription/upgrade', { method: 'POST', body: JSON.stringify({ plan }) }),
+    cancel: () => request<{ subscription: string }>('/profile/subscription/cancel', { method: 'POST' }),
+  },
+  subscription: {
+    createCheckout: (plan: string) =>
+      request<{ url: string }>('/subscription/create-checkout', { method: 'POST', body: JSON.stringify({ plan }) }),
+    createPortal: () =>
+      request<{ url: string }>('/subscription/create-portal', { method: 'POST' }),
+    cancel: () =>
+      request<{ subscription: string }>('/subscription/cancel', { method: 'POST' }),
   },
 };

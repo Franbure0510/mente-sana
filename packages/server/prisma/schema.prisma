@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -14,7 +14,10 @@ model User {
   nickname      String
   streakDays    Int      @default(0)
   lastActiveAt  DateTime?
-  createdAt     DateTime @default(now())
+  subscription        String   @default("free")
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?
+  createdAt           DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   diaryEntries     DiaryEntry[]
@@ -156,8 +159,9 @@ model Resource {
   id          String   @id @default(cuid())
   title       String
   description String
+  content     String   @default("")
   category    String
-  url         String
-  tags        String
+  url         String   @default("#")
+  tags        String   @default("")
   createdAt   DateTime @default(now())
 }

@@ -10,11 +10,18 @@
     "dev:server": "npm run dev -w packages/server",
     "dev:mobile": "npm run dev -w packages/mobile",
     "build": "npm run build -w packages/shared && npm run build -w packages/server && npm run build -w packages/web",
+    "start": "npm run start -w packages/server",
+    "start:web": "npm run start -w packages/web",
     "db:push": "npm run db:push -w packages/server",
     "db:seed": "npm run db:seed -w packages/server",
-    "setup": "npm install && npm run db:push && npm run db:seed"
+    "setup": "npm install && npm run db:push && npm run db:seed",
+    "production": "npm run build && npm run db:push && npm run start"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   }
 }

@@ -1,0 +1,7 @@
+export const ArrowUpRight = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>;
+export const PlayIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4 20 12 6 20 6 4Z" /></svg>;
+export const ClockIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
+export const GlobeIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3a15 15 0 0 1 4 9 15 15 0 0 1-4 9 15 15 0 0 1-4-9 15 15 0 0 1 4-9Z" /></svg>;
+export const ImageIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2ZM18 5v14H5V5h13ZM8 14l2.5-3 3.5 4.5 2-2.5L19 16H5l3-4Z" /></svg>;
+export const MovieIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4 20 8 4 8 2 4h16ZM20 10v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8h16ZM8 12v4H6v-4h2Zm4 0v4h-2v-4h2Zm4 0v4h-2v-4h2Z" /></svg>;
+export const LightbulbIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-4.9 12.1c.5.5.9 1 1.1 1.6.2.5.3 1 .3 1.5v1.8h6.9v-1.8c0-.5.1-1 .3-1.5.2-.6.6-1.1 1.1-1.6A7 7 0 0 0 12 2ZM9 20h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1Z" /></svg>;

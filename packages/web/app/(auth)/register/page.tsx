@@ -12,80 +12,51 @@ export default function RegisterPage() {
   const [nickname, setNickname] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      await register(email, password, nickname);
-      router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    try { await register(email, password, nickname); router.push('/dashboard'); } catch (err: any) { setError(err.message); } finally { setLoading(false); }
   };
-
   return (
-    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px' }}>
-      <div style={{ maxWidth: 380, width: '100%' }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: 20,
-            background: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1))',
-            border: '1px solid rgba(16,185,129,0.12)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 28, marginBottom: 16,
-            backdropFilter: 'blur(8px)',
-          }}>
-            🌱
-          </div>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#fff', margin: '0 0 6px 0' }}>Crear cuenta</h1>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>Empieza tu viaje de bienestar</p>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          {error && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 18px', borderRadius: 16, background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.15)', color: '#ef4444', fontSize: 14, marginBottom: 16 }}>
-              <span>⚠️</span> {error}
+    <div className="fixed inset-0 h-screen w-screen bg-black p-3 md:p-4 font-inter z-40 overflow-hidden">
+      <div className="w-full h-full rounded-2xl flex flex-col overflow-hidden relative bg-black">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover anim-fade" style={{ animationDelay: '0.2s' }} src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260717_120352_eb988725-1351-43b3-8095-16e4a1005e3d.mp4" />
+        <div className="absolute inset-0 bg-black/40" />
+        <nav className="relative z-10 flex items-center justify-between px-6 md:px-10 pt-6 md:pt-8">
+          <Link href="/" className="anim-stagger flex flex-col items-center" style={{ animationDelay: '0.1s' }}>
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center text-2xl" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)' }}>🌿</div>
+            <span className="text-white text-[10px] md:text-xs tracking-[0.35em] mt-2 font-light">M E N T E &ensp; S A N A</span>
+          </Link>
+          <Link href="/" className="anim-stagger hidden md:block px-5 py-2.5 text-white text-sm btn-cut-border" style={{ animationDelay: '0.2s' }}><span>Volver al inicio</span></Link>
+        </nav>
+        <div className="relative z-10 flex-1 flex items-center justify-center px-6 py-8 overflow-auto">
+          <div className="anim-stagger w-full max-w-[400px] rounded-2xl p-7 md:p-8" style={{ animationDelay: '0.4s', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+            <div className="text-center mb-7">
+              <h1 className="text-white text-2xl md:text-3xl font-medium tracking-tight">Crear cuenta</h1>
+              <p className="text-white/50 text-sm mt-2">Empieza tu viaje de bienestar hoy</p>
             </div>
-          )}
-
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 8, display: 'block' }}>Nickname</label>
-            <input type="text" value={nickname} onChange={e => setNickname(e.target.value)}
-              placeholder="¿Cómo quieres llamarte?" required />
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {error && <div className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm" style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5' }}>⚠️ {error}</div>}
+              <div>
+                <label className="text-white/60 text-xs tracking-wide mb-1.5 block">Nickname</label>
+                <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="¿Cómo quieres llamarte?" required className="w-full !bg-white/10 !border-white/15 text-white placeholder:text-white/30 focus:!border-white/30" />
+              </div>
+              <div>
+                <label className="text-white/60 text-xs tracking-wide mb-1.5 block">Email</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@email.com" required className="w-full !bg-white/10 !border-white/15 text-white placeholder:text-white/30 focus:!border-white/30" />
+              </div>
+              <div>
+                <label className="text-white/60 text-xs tracking-wide mb-1.5 block">Contraseña</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Mínimo 6 caracteres" minLength={6} required className="w-full !bg-white/10 !border-white/15 text-white placeholder:text-white/30 focus:!border-white/30" />
+              </div>
+              <button type="submit" disabled={loading} className="w-full py-3.5 bg-white text-black text-sm font-medium hover:bg-white/90 transition-colors btn-cut flex items-center justify-center gap-2 disabled:opacity-60 mt-2">
+                {loading ? 'Creando...' : 'Crear cuenta'}
+              </button>
+            </form>
+            <p className="text-center text-sm text-white/40 mt-6">¿Ya tienes cuenta? <Link href="/login" className="text-white font-medium hover:underline">Inicia sesión</Link></p>
           </div>
-
-          <div style={{ marginBottom: 18 }}>
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 8, display: 'block' }}>Email</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-              placeholder="tu@email.com" required />
-          </div>
-
-          <div style={{ marginBottom: 24 }}>
-            <label style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 8, display: 'block' }}>Contraseña</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-              placeholder="Mínimo 6 caracteres" minLength={6} required />
-          </div>
-
-          <button type="submit" disabled={loading} style={{
-            width: '100%', background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-            color: '#fff', border: 'none', borderRadius: 16,
-            padding: '16px 24px', fontWeight: 700, fontSize: 16, cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.6 : 1,
-            boxShadow: '0 4px 20px rgba(168,85,247,0.25)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-          }}>
-            {loading ? <><span style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', display: 'inline-block' }} /> Creando...</> : '🌱 Comenzar'}
-          </button>
-        </form>
-
-        <p style={{ textAlign: 'center', fontSize: 14, color: 'rgba(255,255,255,0.35)', marginTop: 32 }}>
-          ¿Ya tienes cuenta?{' '}
-          <Link href="/login" style={{ color: '#a855f7', fontWeight: 600, textDecoration: 'none' }}>Inicia sesión</Link>
-        </p>
+        </div>
       </div>
     </div>
   );

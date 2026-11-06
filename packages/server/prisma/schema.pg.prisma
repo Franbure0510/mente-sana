@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  nickname      String
+  streakDays    Int      @default(0)
+  lastActiveAt  DateTime?
+  subscription        String   @default("free")
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?
+  createdAt           DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  diaryEntries     DiaryEntry[]
+  checkIns         DailyCheckIn[]
+  exerciseSessions ExerciseSession[]
+  conversations    Conversation[]
+  chatMessages     ChatMessage[]
+  communityPosts    CommunityPost[]
+  communityComments CommunityComment[]
+  communityLikes    CommunityLike[]
+}
+
+model DiaryEntry {
+  id             String   @id @default(cuid())
+  userId         String
+  date           DateTime @default(now())
+  moodLevel      Int
+  emotions       String
+  thought        String
+  rationalThought String?
+  gratitude      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model DailyCheckIn {
+  id           String   @id @default(cuid())
+  userId       String
+  date         DateTime @default(now())
+  moodLevel    Int
+  anxietyLevel Int
+  sleepHours   Float?
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Exercise {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String
+  duration    Int
+  icon        String
+  createdAt   DateTime @default(now())
+
+  sessions ExerciseSession[]
+  steps    ExerciseStep[]
+}
+
+model ExerciseStep {
+  id          String @id @default(cuid())
+  exerciseId  String
+  order       Int
+  instruction String
+  duration    Int
+
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model ExerciseSession {
+  id         String   @id @default(cuid())
+  userId     String
+  exerciseId String
+  moodBefore Int?
+  moodAfter  Int?
+  notes      String?
+  completedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String   @default("Nueva conversación")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User          @relation(fields: [userId], references: [id])
+  messages ChatMessage[]
+}
+
+model ChatMessage {
+  id             String   @id @default(cuid())
+  conversationId String
+  userId         String
+  role           String
+  content        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+}
+
+model CommunityPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  category    String
+  anonymousId String
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User               @relation(fields: [userId], references: [id])
+  comments CommunityComment[]
+  likes    CommunityLike[]
+}
+
+model CommunityComment {
+  id          String   @id @default(cuid())
+  postId      String
+  content     String
+  anonymousId String
+  userId      String
+  createdAt   DateTime @default(now())
+
+  post CommunityPost @relation(fields: [postId], references: [id])
+  user User         @relation(fields: [userId], references: [id])
+}
+
+model CommunityLike {
+  id     String @id @default(cuid())
+  postId String
+  userId String
+
+  post CommunityPost @relation(fields: [postId], references: [id])
+  user User         @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  content     String   @default("")
+  category    String
+  url         String   @default("#")
+  tags        String   @default("")
+  createdAt   DateTime @default(now())
+}
